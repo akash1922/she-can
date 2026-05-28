@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import submissionsRouter from './routes/submissions.js';
 import adminRouter from './routes/admin.js';
 import { initWebSocket } from './services/websocket.js';
@@ -8,6 +10,9 @@ import { initWebSocket } from './services/websocket.js';
 dotenv.config();
 
 const app = express();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const PORT = parseInt(process.env.PORT || 5000, 10);
 
 // Enable CORS for localhost frontend (React on port 5173 by default)
@@ -39,10 +44,25 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Root route handler
-app.get('/', (req, res) => {
-  res.send('Welcome to the She Can Foundation API Service! Online and ready.');
-});
+// Serve static assets from frontend build folder in production
+if (process.env.NODE_ENV === 'production') {
+  const distPath = path.join(__dirname, '../frontend/dist');
+  app.use(express.static(distPath));
+  
+  // Wildcard route to serve React app for SPA client-side routing
+  app.get('*', (req, res, next) => {
+    // Skip API routes so they fall through to their respective handlers
+    if (req.path.startsWith('/api/') || req.path.startsWith('/health')) {
+      return next();
+    }
+    res.sendFile(path.join(distPath, 'index.html'));
+  });
+} else {
+  // Root route handler for development
+  app.get('/', (req, res) => {
+    res.send('Welcome to the She Can Foundation API Service! Online and ready.');
+  });
+}
 
 // 404 Route handler
 app.use((req, res, next) => {
@@ -79,4 +99,9 @@ const startServer = (port) => {
   });
 };
 
-startServer(PORT);
+if (!process.env.VERCEL) {
+  startServer(PORT);
+}
+
+export default app;
+

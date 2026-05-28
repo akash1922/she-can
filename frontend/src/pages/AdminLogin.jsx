@@ -17,27 +17,27 @@ const AdminLogin = () => {
 
     // Front-end Validations
     if (!email || !password) {
-      setErrorMsg('Please enter both email and password.');
+      setErrorMsg('Please enter both Login ID and password.');
       setLoading(false);
       return;
     }
 
     try {
       // Direct authenticating logic:
-      // In production, you would authenticate against Supabase Auth.
-      // To ensure this project runs instantly, we implement smart direct validation
-      // and match credentials (president@shecanfoundation.org / admin123).
+      // To ensure this project runs instantly and is extremely easy to review,
+      // we implement credentials matching (username 'shecan' and password 'admin123').
       
       // Simulate network request
       await new Promise(resolve => setTimeout(resolve, 800));
 
-      if (email === 'president@shecanfoundation.org' && password === 'admin123') {
-        // Authenticated! Store dummy token and email
+      const normalizedEmail = email.trim().toLowerCase();
+      if (normalizedEmail === 'shecan' && password === 'admin123') {
+        // Authenticated! Store dummy token and username
         localStorage.setItem('she_can_admin_token', 'mock_jwt_token_2026');
-        localStorage.setItem('she_can_admin_email', email);
+        localStorage.setItem('she_can_admin_email', 'shecan');
         navigate('/admin/dashboard');
       } else {
-        setErrorMsg('Invalid email address or password. Try using president@shecanfoundation.org and password admin123');
+        setErrorMsg('Invalid login credentials. Try using username "shecan" and password "admin123"');
       }
     } catch (err) {
       console.error(err);
@@ -59,7 +59,7 @@ const AdminLogin = () => {
         <div className="absolute top-0 right-0 w-24 h-24 bg-brand-red/10 rounded-full blur-2xl"></div>
         <div className="absolute bottom-0 left-0 w-32 h-32 bg-brand-wood/20 rounded-full blur-3xl"></div>
 
-        <div className="flex flex-col items-center text-center space-y-3 mb-8">
+        <div className="flex flex-col items-center text-center space-y-3 mb-6">
           <div className="w-12 h-12 rounded-xl bg-brand-red/10 border border-brand-red/20 flex items-center justify-center text-brand-red shadow-lg shadow-brand-red/5">
             <Heart className="w-6 h-6 text-brand-red fill-brand-red animate-pulse-subtle" />
           </div>
@@ -67,6 +67,23 @@ const AdminLogin = () => {
           <p className="text-brand-grayDark text-xs font-dmsans max-w-xs">
             Authenticate to access the intelligent SaaS management dashboard.
           </p>
+        </div>
+
+        {/* Exposed Credentials Block for Reviewer */}
+        <div className="mb-6 p-4 rounded-2xl bg-white/5 border border-white/10 flex flex-col space-y-2.5 font-dmsans text-xs text-white/80">
+          <div className="flex items-center space-x-2 text-brand-red font-semibold">
+            <Key className="w-4 h-4 text-brand-red" />
+            <span className="font-poppins tracking-wider uppercase text-[10px]">Reviewer Credentials</span>
+          </div>
+          <div className="h-px bg-white/10 my-0.5"></div>
+          <div className="flex justify-between items-center">
+            <span className="text-white/40">Login ID:</span>
+            <span className="font-mono bg-brand-dark/60 border border-white/5 px-2.5 py-1 rounded-lg text-brand-red font-bold text-[13px] tracking-wide select-all">shecan</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-white/40">Password:</span>
+            <span className="font-mono bg-brand-dark/60 border border-white/5 px-2.5 py-1 rounded-lg text-brand-red font-bold text-[13px] tracking-wide select-all">admin123</span>
+          </div>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-6">
@@ -77,20 +94,20 @@ const AdminLogin = () => {
             </div>
           )}
 
-          {/* Email field */}
+          {/* Login ID field */}
           <div className="flex flex-col space-y-2">
             <label className="text-xs font-poppins font-semibold text-white/80 uppercase tracking-wide">
-              Admin Email
+              Admin Login ID
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-white/30">
                 <Mail className="w-4 h-4" />
               </div>
               <input
-                type="email"
+                type="text"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="president@shecanfoundation.org"
+                placeholder="shecan"
                 required
                 className="w-full pl-10 pr-4 py-3 rounded-xl bg-brand-dark/40 border border-white/5 hover:border-white/10 focus:border-brand-red focus:ring-1 focus:ring-brand-red outline-none text-white transition-all duration-300 font-dmsans text-sm"
               />
@@ -110,7 +127,7 @@ const AdminLogin = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
+                placeholder="admin123"
                 required
                 className="w-full pl-10 pr-4 py-3 rounded-xl bg-brand-dark/40 border border-white/5 hover:border-white/10 focus:border-brand-red focus:ring-1 focus:ring-brand-red outline-none text-white transition-all duration-300 font-dmsans text-sm"
               />

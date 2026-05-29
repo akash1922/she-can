@@ -30,9 +30,11 @@ app.use((req, res, next) => {
   next();
 });
 
-// APIs Registration
+// APIs Registration (mounted both with and without the /api prefix to support both Vercel serverless proxying and local development)
 app.use('/api/submissions', submissionsRouter);
+app.use('/submissions', submissionsRouter);
 app.use('/api/admin', adminRouter);
+app.use('/admin', adminRouter);
 
 // Health check endpoint
 app.get('/health', (req, res) => {

@@ -53,7 +53,7 @@ const Home = () => {
             
             <h1 className="font-poppins font-bold text-4xl sm:text-5xl lg:text-6xl leading-[1.1] text-white">
               Empowering Women, <br/>
-              Eradicating <span className="text-brand-red text-gradient-red">Period Poverty.</span>
+              Eradicating <span className="text-brand-red text-gradient-red"> Poverty.</span>
             </h1>
 
             <p className="text-brand-grayDark text-lg max-w-lg leading-relaxed font-dmsans">

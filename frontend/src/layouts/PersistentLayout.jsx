@@ -201,7 +201,7 @@ const PersistentLayout = ({ children }) => {
                   </span>
                 </Link>
                 <p className="text-brand-grayDark text-sm leading-relaxed max-w-sm">
-                  Empowering underprivileged women and eradicating period poverty. Registered under the Indian Society Act, 1860.
+                  Empowering underprivileged women and eradicating  poverty. Registered under the Indian Society Act, 1860.
                 </p>
               </div>
               <div className="flex flex-col space-y-2 md:items-center">

@@ -85,13 +85,22 @@ const Home = () => {
             transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             className="relative flex items-center justify-center lg:justify-end"
           >
-            <div className="relative w-full max-w-md aspect-[4/5] sm:aspect-square md:aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl group border border-white/5">
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-transparent to-transparent z-10 opacity-70"></div>
-              {/* Fallback elegant gradient background since we avoid placeholders */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-brand-red/25 via-brand-wood/60 to-brand-dark flex flex-col justify-end p-8 z-20">
+            <div className="relative w-full max-w-md aspect-[4/5] sm:aspect-square md:aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl group border border-white/5 bg-brand-dark">
+              {/* Blended Background Image with smooth zoom micro-animation */}
+              <img 
+                src="/s1.avif" 
+                alt="Together We Stand" 
+                className="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-luminosity group-hover:scale-105 transition-transform duration-700 ease-out z-0" 
+              />
+              
+              {/* Dark red gradient mask for outstanding text contrast */}
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/70 to-brand-red/10 z-10"></div>
+              
+              {/* Card Content floating above the image overlay */}
+              <div className="absolute inset-0 flex flex-col justify-end p-8 z-20">
                 <Heart className="w-12 h-12 text-brand-red fill-brand-red mb-4 animate-pulse-subtle" />
                 <h3 className="font-poppins font-bold text-2xl text-white mb-2">Together We Stand</h3>
-                <p className="text-white/80 text-sm max-w-xs font-dmsans">
+                <p className="text-white/80 text-sm max-w-xs font-dmsans leading-relaxed">
                   "Every kit donated holds the promise of another month of school, safe and dignified."
                 </p>
               </div>
